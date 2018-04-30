@@ -14,7 +14,7 @@ var accounts = new Accounts('https://rinkeby.infura.io/teochFL5M5Cc6eidkmI5');
 var abi = require('./abi');
 
 // setup my contract
-var contractAddress = '0x5a8f94b3eb222fbfbab083d1ba639649459e68b3';
+var contractAddress = '0x4119d71bd40638ca874d7955a4ebdeae5fd36a45';
 var mycontract = new web3.eth.Contract(abi, contractAddress);
 
 // set up a test account

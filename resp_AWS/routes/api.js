@@ -15,7 +15,11 @@ var abi = require('./abi');
 
 // old address: 0x5a8f94b3eb222fbfbab083d1ba639649459e68b3;
 // setup my contract
+<<<<<<< HEAD
 var contractAddress = '0xc18e297b1e77e99f82d805ac89a10a859bd815a1';
+=======
+var contractAddress = '0x4119d71bd40638ca874d7955a4ebdeae5fd36a45';
+>>>>>>> origin/master
 var mycontract = new web3.eth.Contract(abi, contractAddress);
 
 // set up a test account

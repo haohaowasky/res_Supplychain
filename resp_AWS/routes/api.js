@@ -143,13 +143,13 @@ router.post('/getInfo', function(req,res,next){
 
 router.post('/getAccount', function(req,res,next){
   console.log("Got get request at ");
-  res.send(web3.eth.accounts.privateKeyToAccount("0x" + req.body.mnemonic));
+  res.send(web3.eth.accounts.privateKeyToAccount("0x" + req.body.uuid));
 });
 
 
 router.post('/getBalance', function(req,res,next){
   console.log("Got get request at ");
-  web3.eth.getBalance(web3.eth.accounts.privateKeyToAccount("0x" + req.body.mnemonic).address, function(e, result){
+  web3.eth.getBalance(web3.eth.accounts.privateKeyToAccount("0x" + req.body.uuid).address, function(e, result){
     res.send(web3.utils.fromWei(result, 'ether') + "ether");
   }).catch(next);
 });

@@ -13,8 +13,9 @@ var accounts = new Accounts('https://rinkeby.infura.io/teochFL5M5Cc6eidkmI5');
 
 var abi = require('./abi');
 
+// old address: 0x5a8f94b3eb222fbfbab083d1ba639649459e68b3;
 // setup my contract
-var contractAddress = '0x5a8f94b3eb222fbfbab083d1ba639649459e68b3';
+var contractAddress = '0xc18e297b1e77e99f82d805ac89a10a859bd815a1';
 var mycontract = new web3.eth.Contract(abi, contractAddress);
 
 // set up a test account
@@ -136,6 +137,28 @@ router.post('/getInfo', function(req,res,next){
       }).catch(next);
 
 
+});
+
+
+router.post('/getAccount', function(req,res,next){
+  console.log("Got get request at ");
+  res.send(web3.eth.accounts.privateKeyToAccount("0x" + req.body.mnemonic));
+});
+
+
+router.post('/getBalance', function(req,res,next){
+  console.log("Got get request at ");
+  web3.eth.getBalance(web3.eth.accounts.privateKeyToAccount("0x" + req.body.mnemonic).address, function(e, result){
+    res.send(web3.utils.fromWei(result, 'ether') + "ether");
+  }).catch(next);
+});
+
+
+router.post('/getBarcode', function(req,res,next){
+  console.log("Got get request at ");
+  mycontract.methods.getbarCode(web3.utils.utf8ToHex(req.body.code)).call().then(function(Resp){
+        res.send(Resp);
+      }).catch(next);
 });
 
 module.exports = router;

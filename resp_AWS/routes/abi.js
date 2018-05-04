@@ -43,6 +43,25 @@ module.exports = [
 		"constant": true,
 		"inputs": [
 			{
+				"name": "_barCode",
+				"type": "bytes32"
+			}
+		],
+		"name": "getbarCode",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "_address",
 				"type": "address"
 			}
@@ -91,6 +110,29 @@ module.exports = [
 			{
 				"name": "extrainfo",
 				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "track",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
 			}
 		],
 		"payable": false,

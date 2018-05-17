@@ -5,6 +5,26 @@ const _ = require('lodash');
 const Scan = require("../models/Scan");
 const Scantest = require("../models/Scantest");
 
+// files
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, './pics/');
+  },
+  filename: function(req, file, cb){
+    cb(null,file.originalname);
+  }
+});
+const upload = multer({storage: storage});
+
+//ipfs
+
+var ipfsAPI = require('ipfs-api');
+var ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'});
+
+
+
 // Ethereum configuration
 const Web3 = require('web3');
 const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/teochFL5M5Cc6eidkmI5"));
@@ -15,7 +35,7 @@ var abi = require('./abi');
 
 // old address: 0x5a8f94b3eb222fbfbab083d1ba639649459e68b3;
 // setup my contract
-var contractAddress = '0xc18e297b1e77e99f82d805ac89a10a859bd815a1';
+var contractAddress = '0x5a8f94b3eb222fbfbab083d1ba639649459e68b3';
 
 var mycontract = new web3.eth.Contract(abi, contractAddress);
 
@@ -161,5 +181,49 @@ router.post('/getBarcode', function(req,res,next){
         res.send(Resp);
       }).catch(next);
 });
+
+
+// ipfs post
+router.post('/ipfs', upload.single('campic'), function(req,res,next){
+  if(!req.file){
+    console.log("400 no files");
+    return res.status(400).send("no files")};
+
+  console.log(req.file);
+  //res.send(req.file);
+    ipfs.util.addFromFs ("./pics/" + req.file.originalname, function (err, files) {
+      // 'files' will be an array of objects containing paths and the multihashes of the files added
+            if(err){
+             return console.log(err);
+            }
+            // ipfs.files.cat("QmbdQuGbRFZdeqmK3PJyLV3m4p2KDELKRS4GfaXyehz672", (err, res) =>{
+            //   console.log(err, res.toString());
+            // })
+            console.log(files);
+            res.send(files[0].hash);
+    });
+});
+
+
+router.post('/ipfsbool', upload.single('campic'), function(req,res,next){
+  if(!req.file){
+    console.log("400 no files");
+    return res.status(400).send("no files")};
+
+  console.log(req.file);
+  //res.send(req.file);
+    ipfs.util.addFromFs ("./pics/" + req.file.originalname, function (err, files) {
+      // 'files' will be an array of objects containing paths and the multihashes of the files added
+            if(err){
+             return console.log(err);
+            }
+            // ipfs.files.cat("QmbdQuGbRFZdeqmK3PJyLV3m4p2KDELKRS4GfaXyehz672", (err, res) =>{
+            //   console.log(err, res.toString());
+            // })
+            console.log(files);
+            res.send(true);
+    });
+});
+
 
 module.exports = router;

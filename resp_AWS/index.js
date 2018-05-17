@@ -14,6 +14,8 @@ const app = express();
 // Front End
 app.use(express.static('public'));
 
+
+
 // Body Parser for Json
 app.use(bodyParser.json());
 
